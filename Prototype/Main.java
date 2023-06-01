@@ -1,56 +1,36 @@
 package Prototype;
 
 // Prototype interface
-interface Shape extends Cloneable {
-  void draw();
+interface Painting {
+  Painting createCopy();
 
-  Shape clone();
+  void display();
 }
 
-// Concrete prototype classes
-class Rectangle implements Shape {
-  @Override
-  public void draw() {
-    System.out.println("Drawing a rectangle");
+// Concrete prototype class
+class LandscapePainting implements Painting {
+  private String title;
+
+  public LandscapePainting(String title) {
+    this.title = title;
   }
 
-  @Override
-  public Shape clone() {
-    try {
-      return (Shape) super.clone();
-    } catch (CloneNotSupportedException e) {
-      return null;
-    }
-  }
-}
-
-class Circle implements Shape {
-  @Override
-  public void draw() {
-    System.out.println("Drawing a circle");
+  public Painting createCopy() {
+    return new LandscapePainting(this.title);
   }
 
-  @Override
-  public Shape clone() {
-    try {
-      return (Shape) super.clone();
-    } catch (CloneNotSupportedException e) {
-      return null;
-    }
+  public void display() {
+    System.out.println("Displaying landscape painting: " + title);
   }
 }
 
 // Client code
 public class Main {
   public static void main(String[] args) {
-    Shape rectangle = new Rectangle();
-    Shape clonedRectangle = rectangle.clone();
-    rectangle.draw(); // Output: Drawing a rectangle
-    clonedRectangle.draw(); // Output: Drawing a rectangle
+    Painting originalPainting = new LandscapePainting("Sunset");
+    Painting clonedPainting = originalPainting.createCopy();
 
-    Shape circle = new Circle();
-    Shape clonedCircle = circle.clone();
-    circle.draw(); // Output: Drawing a circle
-    clonedCircle.draw(); // Output: Drawing a circle
+    originalPainting.display(); // Output: Displaying landscape painting: Sunset
+    clonedPainting.display(); // Output: Displaying landscape painting: Sunset
   }
 }
